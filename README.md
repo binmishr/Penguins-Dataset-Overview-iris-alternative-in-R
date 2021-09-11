@@ -16,3 +16,10 @@ uri_chinstrap <- "https://portal.edirepository.org/nis/dataviewer?packageid=knb-
 
 # Combining the URIs
 uris <- c(uri_adelie, uri_gentoo, uri_chinstrap)
+
+# Downloading and importing data
+penguins_raw_df <- uris %>%
+  map_dfr(read_csv, na = c("", "NA", "."), col_types = list()) %>%
+  as.data.frame()
+
+write_csv(penguins_raw_df, here::here("inst", "extdata", "penguins_raw.csv"))
